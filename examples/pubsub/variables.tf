@@ -9,7 +9,7 @@ variable "region" {
 }
 
 variable "coralogix_region" {
-  description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US]"
+  description = "The Coralogix location region, possible options are [Europe, Europe2, India, Singapore, US, US2]"
   type        = string
   default     = "Europe"
 }

@@ -6,6 +6,8 @@ locals {
     India     = "api.app.coralogix.in"
     Singapore = "api.coralogixsg.com"
     US        = "api.coralogix.us"
+    US2       = "cx498.coralogix.com"
+
   }
   coralogix_url = local.coralogix_regions[var.coralogix_region]
   labels = {
