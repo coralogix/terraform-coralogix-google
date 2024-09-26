@@ -28,6 +28,7 @@ Manage the `Cloud Function` that retrieves logs from `GCS` bucket and sends them
 | <a name="input_newline_pattern"></a> [newline\_pattern](#input\_newline\_pattern) | The pattern for lines splitting | `string` | `(?:\r\n\|\r\|\n)` | no |
 | <a name="input_bucket"></a> [bucket](#input\_bucket) | The name of the GCS Bucket to watch | `string` | n/a | yes |
 | <a name="input_labels"></a> [labels](#input\_labels) | A map of labels to add to Cloud Function | `map(string)` | `{}` | no |
+| <a name="input_function_iam_member"></a> [function\_iam\_member](#input\_function\_iam\_member) | The IAM member to add to the Cloud Function | `string` | `"allUsers"` | no |
 
 ## Outputs
 

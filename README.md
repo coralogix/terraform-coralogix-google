@@ -1,3 +1,7 @@
+## [NOTICE] This repo is being deprecated in favor of the [gcp-logs](https://coralogix.com/docs/integrations/gcp/gcp-logs/) pull integration. Please use the new integration for all new gcp logs integrations.
+# [terraform-provider-coralogix](https://github.com/coralogix/terraform-provider-coralogix) provides `coralogix_integration` resource for this.
+---
+
 # GCP Coralogix Terraform module
 
 ## Usage

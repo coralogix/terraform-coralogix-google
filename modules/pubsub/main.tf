@@ -51,12 +51,12 @@ resource "google_cloudfunctions_function" "this" {
   source_archive_object = google_storage_bucket_object.this.name
   entry_point           = "mainPubSub"
   environment_variables = {
-    CORALOGIX_URL        = local.coralogix_url
-    private_key              = var.private_key
-    app_name                 = var.application_name
-    sub_name                 = var.subsystem_name
-    newline_pattern          = var.newline_pattern
-    sampling                 = var.sampling
+    CORALOGIX_URL   = local.coralogix_url
+    private_key     = var.private_key
+    app_name        = var.application_name
+    sub_name        = var.subsystem_name
+    newline_pattern = var.newline_pattern
+    sampling        = var.sampling
   }
   event_trigger {
     event_type = "google.pubsub.topic.publish"
@@ -70,5 +70,5 @@ resource "google_cloudfunctions_function_iam_member" "this" {
   region         = google_cloudfunctions_function.this.region
   cloud_function = google_cloudfunctions_function.this.name
   role           = "roles/cloudfunctions.invoker"
-  member         = "allUsers"
+  member         = var.function_iam_member
 }

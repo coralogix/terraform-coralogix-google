@@ -47,3 +47,9 @@ variable "topic" {
   description = "The name of the PubSub topic to watch"
   type        = string
 }
+
+variable "function_iam_member" {
+  description = "The IAM member to grant the Cloud Function invoker role"
+  type        = string
+  default     = "allUsers"
+}

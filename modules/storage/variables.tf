@@ -40,3 +40,9 @@ variable "labels" {
   type        = map(string)
   default     = {}
 }
+
+variable "function_iam_member" {
+  description = "The IAM member to grant the Cloud Function invoker role"
+  type        = string
+  default     = "allUsers"
+}

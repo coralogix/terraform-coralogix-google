@@ -62,5 +62,5 @@ resource "google_cloudfunctions_function_iam_member" "this" {
   region         = google_cloudfunctions_function.this.region
   cloud_function = google_cloudfunctions_function.this.name
   role           = "roles/cloudfunctions.invoker"
-  member         = "allUsers"
+  member         = var.function_iam_member
 }

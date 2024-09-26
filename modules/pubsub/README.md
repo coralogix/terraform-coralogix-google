@@ -29,6 +29,7 @@ Manage the `Cloud Function` that retrieves logs from `PubSub` topic and sends th
 | <a name="input_sampling"></a> [sampling](#input\_sampling) | The sampling rate for the logs. default is 1 | `number` | `1` | no |
 | <a name="input_topic"></a> [topic](#input\_topic) | The name of the PubSub topic to watch | `string` | n/a | yes |
 | <a name="input_labels"></a> [labels](#input\_labels) | A map of labels to add to Cloud Function | `map(string)` | `{}` | no |
+| <a name="input_function_iam_member"></a> [function_iam_member](#input\_function_iam_member) | The IAM member to add to the Cloud Function | `string` | `"allUsers"` | no |
 
 ## Outputs
 
