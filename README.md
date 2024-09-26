@@ -1,8 +1,8 @@
 ## [NOTICE] This repo is being deprecated in favor of the [gcp-logs](https://coralogix.com/docs/integrations/gcp/gcp-logs/) pull integration
 
-### Please use the new integration for all new gcp logs integrations.<br /> [terraform-provider-coralogix](https://github.com/coralogix/terraform-provider-coralogix) provides `coralogix_integration` resource for this
+Please use the new integration for all new gcp logs integrations.<br /> [terraform-provider-coralogix](https://github.com/coralogix/terraform-provider-coralogix) provides `coralogix_integration` resource for this. Runtime support for [nodejs14](https://cloud.google.com/functions/docs/runtime-support#node.js) on Cloud Run Functions will decommision on 2025-01-30. Please migrate to the new integration before that date
 
-### Runtime support for [nodejs14](https://cloud.google.com/functions/docs/runtime-support#node.js) on Cloud Run Functions will decommision on 2025-01-30. Please migrate to the new integration before that date
+---
 
 # GCP Coralogix Terraform module
 
