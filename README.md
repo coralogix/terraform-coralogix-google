@@ -3,8 +3,6 @@
 
 Please use the new integration for all new gcp logs integrations. [terraform-provider-coralogix](https://github.com/coralogix/terraform-provider-coralogix) provides `coralogix_integration` resource for this. Runtime support for [nodejs14](https://cloud.google.com/functions/docs/runtime-support#node.js) on Cloud Run Functions will decommision soon.
 
----------------
-
 # GCP Coralogix Terraform module
 
 ## Usage
