@@ -60,6 +60,6 @@ module "gcs-archive" {
 ## Notes
 
 - **Storage class**: `STANDARD` is recommended to avoid retrieval fees when querying archived data from the Coralogix UI.
-- **CMEK**: Cloud KMS keys must be in the same region as the buckets.
+- **CMEK**: Cloud KMS keys must be in the same region as the buckets. The module automatically grants `roles/cloudkms.cryptoKeyEncrypterDecrypter` to the project's GCS service agent, which performs the actual encrypt/decrypt operations.
 - **Service account**: Contact your Coralogix representative to obtain the correct service account email for your environment.
 - You **cannot** use the same bucket for both metrics and logs.

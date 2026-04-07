@@ -1,11 +1,18 @@
 locals {
   create_logs_bucket    = var.logs_bucket_name != null
   create_metrics_bucket = var.metrics_bucket_name != null
+  needs_cmek            = (local.create_logs_bucket && var.logs_kms_key_name != null) || (local.create_metrics_bucket && var.metrics_kms_key_name != null)
 
   labels = merge({
     provider = "coralogix"
     module   = "gcs-archive"
   }, var.labels)
+}
+
+# The GCS service agent performs CMEK encrypt/decrypt on behalf of the bucket.
+data "google_storage_project_service_account" "gcs_account" {
+  count   = local.needs_cmek ? 1 : 0
+  project = var.project_id
 }
 
 # --- Logs bucket ---
@@ -44,7 +51,7 @@ resource "google_kms_crypto_key_iam_member" "logs_cmek" {
 
   crypto_key_id = var.logs_kms_key_name
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  member        = "serviceAccount:${var.coralogix_service_account}"
+  member        = "serviceAccount:${data.google_storage_project_service_account.gcs_account[0].email_address}"
 }
 
 # --- Metrics bucket ---
@@ -83,5 +90,5 @@ resource "google_kms_crypto_key_iam_member" "metrics_cmek" {
 
   crypto_key_id = var.metrics_kms_key_name
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  member        = "serviceAccount:${var.coralogix_service_account}"
+  member        = "serviceAccount:${data.google_storage_project_service_account.gcs_account[0].email_address}"
 }
