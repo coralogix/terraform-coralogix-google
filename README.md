@@ -1,8 +1,6 @@
 # GCP Coralogix Terraform module
 
-## v2 Modules
-
-New modules are available under `modules/v2/`. Use these for all new deployments.
+## Modules
 
 ### `gcs-archive`
 
@@ -21,45 +19,13 @@ module "gcs-archive" {
 
 See the [gcs-archive module](https://github.com/coralogix/terraform-coralogix-google/tree/master/modules/v2/gcs-archive) for full documentation.
 
----
-
-## Deprecated v1 Modules
-
-> **[NOTICE]** The v1 modules (`modules/pubsub` and `modules/storage`) are deprecated in favor of the [gcp-logs](https://coralogix.com/docs/integrations/gcp/gcp-logs/) pull integration. Please use the new integration for all new GCP logs integrations. [terraform-provider-coralogix](https://github.com/coralogix/terraform-provider-coralogix) provides the `coralogix_integration` resource for this. Runtime support for [nodejs14](https://cloud.google.com/functions/docs/runtime-support#node.js) on Cloud Run Functions will decommission soon. **The v2 modules above are actively maintained.**
-
-`pubsub`:
-
-```hcl
-module "pubsub" {
-  source = "coralogix/google/coralogix//modules/pubsub"
-
-  coralogix_region = "Europe"
-  private_key      = "2f55c873-c0cf-4523-82d4-c3b68ee6cb46"
-  application_name = "Pub/Sub"
-  subsystem_name   = "logs"
-  bucket           = "test-topic-name"
-}
-```
-
-`storage`:
-
-```hcl
-module "storage" {
-  source = "coralogix/google/coralogix//modules/storage"
-
-  coralogix_region = "Europe"
-  private_key      = "2f55c873-c0cf-4523-82d4-c3b68ee6cb46"
-  application_name = "GCS"
-  subsystem_name   = "logs"
-  bucket           = "test-bucket-name"
-}
-```
-
 ## Examples
 
 - [gcs-archive](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/gcs-archive) - Provision GCS archive buckets for Coralogix.
-- [pubsub](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/pubsub) - Send logs from `PubSub` topic. *(deprecated)*
-- [storage](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/storage) - Send logs from `GCS` bucket. *(deprecated)*
+
+## Deprecated v1 Modules
+
+The v1 modules (`pubsub` and `storage`) are deprecated. See [modules/README.md](https://github.com/coralogix/terraform-coralogix-google/tree/master/modules/README.md) for details.
 
 ## Authors
 
