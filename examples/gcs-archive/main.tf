@@ -2,7 +2,7 @@ provider "google" {
 }
 
 module "gcs-archive" {
-  source = "coralogix/google/coralogix//modules/v2/gcs-archive"
+  source = "../../modules/v2/gcs-archive"
 
   gcp_region                = var.gcp_region
   coralogix_service_account = var.coralogix_service_account
