@@ -44,7 +44,7 @@ resource "google_storage_bucket_object" "this" {
 resource "google_cloudfunctions_function" "this" {
   name                  = local.function_name
   description           = "Send PubSub logs to Coralogix."
-  runtime               = "nodejs14"
+  runtime               = "nodejs20"
   available_memory_mb   = 1024
   timeout               = 60
   source_archive_bucket = google_storage_bucket_object.this.bucket
