@@ -4,12 +4,23 @@ locals {
     module   = "private-service-connect"
   }, var.labels)
 
-  private_dns_name         = "private.${var.coralogix_domain}."
-  ingress_private_hostname = "ingress.private.${var.coralogix_domain}"
-  api_private_hostname     = "api.private.${var.coralogix_domain}"
+  private_dns_name           = "private.${var.coralogix_domain}."
+  ingress_private_hostname   = "ingress.private.${var.coralogix_domain}"
+  api_private_hostname       = "api.private.${var.coralogix_domain}"
+  manage_private_dns_records = var.create_private_dns_zone || var.existing_private_dns_zone_name != null
+}
+
+data "google_compute_subnetwork" "psc" {
+  count = var.use_existing_psc_subnet ? 1 : 0
+
+  name    = var.psc_subnet_name
+  project = var.project_id
+  region  = var.gcp_region
 }
 
 resource "google_compute_subnetwork" "psc" {
+  count = var.use_existing_psc_subnet ? 0 : 1
+
   name          = var.psc_subnet_name
   project       = var.project_id
   region        = var.gcp_region
@@ -22,7 +33,7 @@ resource "google_compute_address" "ingress" {
   name         = var.ingress_address_name
   project      = var.project_id
   region       = var.gcp_region
-  subnetwork   = google_compute_subnetwork.psc.id
+  subnetwork   = var.use_existing_psc_subnet ? data.google_compute_subnetwork.psc[0].id : google_compute_subnetwork.psc[0].id
   address_type = "INTERNAL"
   description  = "Coralogix PSC ingress endpoint IP."
   labels       = local.labels
@@ -32,7 +43,7 @@ resource "google_compute_address" "api" {
   name         = var.api_address_name
   project      = var.project_id
   region       = var.gcp_region
-  subnetwork   = google_compute_subnetwork.psc.id
+  subnetwork   = var.use_existing_psc_subnet ? data.google_compute_subnetwork.psc[0].id : google_compute_subnetwork.psc[0].id
   address_type = "INTERNAL"
   description  = "Coralogix PSC API endpoint IP."
   labels       = local.labels
@@ -82,10 +93,10 @@ resource "google_dns_managed_zone" "private" {
 }
 
 resource "google_dns_record_set" "ingress" {
-  count = var.create_private_dns_zone ? 1 : 0
+  count = local.manage_private_dns_records ? 1 : 0
 
   project      = var.project_id
-  managed_zone = google_dns_managed_zone.private[0].name
+  managed_zone = var.create_private_dns_zone ? google_dns_managed_zone.private[0].name : var.existing_private_dns_zone_name
   name         = "${local.ingress_private_hostname}."
   type         = "A"
   ttl          = var.dns_record_ttl
@@ -93,10 +104,10 @@ resource "google_dns_record_set" "ingress" {
 }
 
 resource "google_dns_record_set" "api" {
-  count = var.create_private_dns_zone ? 1 : 0
+  count = local.manage_private_dns_records ? 1 : 0
 
   project      = var.project_id
-  managed_zone = google_dns_managed_zone.private[0].name
+  managed_zone = var.create_private_dns_zone ? google_dns_managed_zone.private[0].name : var.existing_private_dns_zone_name
   name         = "${local.api_private_hostname}."
   type         = "A"
   ttl          = var.dns_record_ttl

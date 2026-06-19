@@ -1,6 +1,11 @@
 output "psc_subnet_name" {
   description = "The name of the PSC subnet."
-  value       = google_compute_subnetwork.psc.name
+  value       = var.psc_subnet_name
+}
+
+output "psc_subnet_self_link" {
+  description = "The self link of the PSC subnet."
+  value       = var.use_existing_psc_subnet ? data.google_compute_subnetwork.psc[0].self_link : google_compute_subnetwork.psc[0].self_link
 }
 
 output "ingress_endpoint_ip" {
@@ -34,8 +39,8 @@ output "api_forwarding_rule_self_link" {
 }
 
 output "dns_zone_name" {
-  description = "The name of the private Cloud DNS zone, if created."
-  value       = try(google_dns_managed_zone.private[0].name, null)
+  description = "The name of the private Cloud DNS zone, if created or reused for records."
+  value       = var.create_private_dns_zone ? google_dns_managed_zone.private[0].name : var.existing_private_dns_zone_name
 }
 
 output "ingress_private_hostname" {

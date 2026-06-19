@@ -16,13 +16,11 @@ variable "network_self_link" {
 }
 
 variable "psc_subnet_name" {
-  description = "The name of the PSC subnet"
+  description = "The existing PSC subnet name"
   type        = string
-  default     = "cx-psc-subnet"
 }
 
-variable "psc_subnet_cidr" {
-  description = "A non-overlapping /28 CIDR block for the PSC subnet"
+variable "existing_private_dns_zone_name" {
+  description = "The existing private Cloud DNS managed zone name"
   type        = string
-  default     = "10.100.16.0/28"
 }

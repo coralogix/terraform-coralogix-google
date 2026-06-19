@@ -10,24 +10,36 @@ variable "gcp_region" {
 }
 
 variable "network_self_link" {
-  description = "The self link or id of the existing VPC network that will host the PSC endpoints and private DNS visibility."
+  description = "The existing VPC network in self link form, for example projects/<project>/global/networks/<name>."
   type        = string
+
+  validation {
+    condition     = can(regex("(^https://|^projects/).*/global/networks/[^/]+$", var.network_self_link))
+    error_message = "network_self_link must be a VPC network self link such as projects/<project>/global/networks/<name>."
+  }
 }
 
 variable "psc_subnet_name" {
-  description = "Name of the subnet that will allocate PSC endpoint IP addresses."
+  description = "Name of the PSC subnet. If use_existing_psc_subnet is true, this must match an existing subnet in the selected region."
   type        = string
   default     = "cx-psc-subnet"
 }
 
 variable "psc_subnet_cidr" {
-  description = "CIDR range for the PSC subnet. The Coralogix guide uses a dedicated /28."
+  description = "CIDR range for the PSC subnet. Required when creating a subnet. The Coralogix guide uses a dedicated /28."
   type        = string
+  default     = null
 
   validation {
-    condition     = can(cidrnetmask(var.psc_subnet_cidr)) && tonumber(split("/", var.psc_subnet_cidr)[1]) == 28
-    error_message = "psc_subnet_cidr must be a valid /28 CIDR block."
+    condition     = var.psc_subnet_cidr == null || can(cidrnetmask(var.psc_subnet_cidr)) && tonumber(split("/", var.psc_subnet_cidr)[1]) == 28
+    error_message = "psc_subnet_cidr must be null or a valid /28 CIDR block."
   }
+}
+
+variable "use_existing_psc_subnet" {
+  description = "Reuse an existing PSC subnet instead of creating one."
+  type        = bool
+  default     = false
 }
 
 variable "ingress_service_attachment" {
@@ -61,9 +73,15 @@ variable "create_private_dns_zone" {
 }
 
 variable "dns_zone_name" {
-  description = "Name of the private Cloud DNS managed zone."
+  description = "Name of the private Cloud DNS managed zone to create when create_private_dns_zone is true."
   type        = string
   default     = "private-coralogix"
+}
+
+variable "existing_private_dns_zone_name" {
+  description = "Existing private Cloud DNS managed zone name to use for record creation when create_private_dns_zone is false."
+  type        = string
+  default     = null
 }
 
 variable "dns_record_ttl" {

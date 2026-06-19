@@ -38,6 +38,7 @@ See the [gcs-archive module](https://github.com/coralogix/terraform-coralogix-go
 ## Examples
 
 - [private-service-connect](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/private-service-connect) - Provision Coralogix PSC endpoints and private DNS in an existing VPC.
+- [private-service-connect-existing-zone](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/private-service-connect-existing-zone) - Reuse an existing PSC subnet and private DNS zone for Coralogix endpoints.
 - [gcs-archive](https://github.com/coralogix/terraform-coralogix-google/tree/master/examples/gcs-archive) - Provision GCS archive buckets for Coralogix.
 
 ## Deprecated v1 Modules
