@@ -48,13 +48,13 @@ variable "existing_psc_subnet_self_link" {
 }
 
 variable "ingress_service_attachment" {
-  description = "Coralogix ingress PSC service attachment URI."
+  description = "Coralogix ingress PSC service attachment URI. Must be in gcp_region."
   type        = string
   default     = "projects/coralogix-prod-saas-service/regions/us-central1/serviceAttachments/us3-psc-ingress-v1"
 }
 
 variable "api_service_attachment" {
-  description = "Coralogix API PSC service attachment URI."
+  description = "Coralogix API PSC service attachment URI. Must be in gcp_region."
   type        = string
   default     = "projects/coralogix-prod-saas-service/regions/us-central1/serviceAttachments/us3-psc-api-v1"
 }
@@ -66,9 +66,9 @@ variable "coralogix_domain" {
 }
 
 variable "allow_psc_global_access" {
-  description = "Whether the PSC endpoints can be accessed from workloads in other regions of the same VPC."
+  description = "Whether the PSC endpoints can be accessed from workloads in other regions of the same VPC. Defaults to false; enable only when cross-region access is required."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "private_dns_zone_name" {

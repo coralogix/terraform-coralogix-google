@@ -21,6 +21,13 @@ resource "google_compute_subnetwork" "psc" {
   network       = var.network_self_link
   ip_cidr_range = var.psc_subnet_cidr
   description   = "Coralogix PSC endpoint subnet."
+
+  lifecycle {
+    precondition {
+      condition     = var.psc_subnet_cidr != null
+      error_message = "psc_subnet_cidr is required when existing_psc_subnet_self_link is null."
+    }
+  }
 }
 
 resource "google_compute_address" "ingress" {
@@ -54,6 +61,13 @@ resource "google_compute_forwarding_rule" "ingress" {
   allow_psc_global_access = var.allow_psc_global_access
   no_automate_dns_zone    = true
   labels                  = local.labels
+
+  lifecycle {
+    precondition {
+      condition     = can(regex("(^https://|^projects/).*/regions/${var.gcp_region}/serviceAttachments/[^/]+$", var.ingress_service_attachment))
+      error_message = "ingress_service_attachment must be a service attachment self link in gcp_region."
+    }
+  }
 }
 
 resource "google_compute_forwarding_rule" "api" {
@@ -67,6 +81,13 @@ resource "google_compute_forwarding_rule" "api" {
   allow_psc_global_access = var.allow_psc_global_access
   no_automate_dns_zone    = true
   labels                  = local.labels
+
+  lifecycle {
+    precondition {
+      condition     = can(regex("(^https://|^projects/).*/regions/${var.gcp_region}/serviceAttachments/[^/]+$", var.api_service_attachment))
+      error_message = "api_service_attachment must be a service attachment self link in gcp_region."
+    }
+  }
 }
 
 resource "google_dns_managed_zone" "private" {
