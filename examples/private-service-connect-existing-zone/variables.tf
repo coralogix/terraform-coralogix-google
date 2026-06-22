@@ -15,8 +15,8 @@ variable "network_self_link" {
   type        = string
 }
 
-variable "psc_subnet_name" {
-  description = "The existing PSC subnet name"
+variable "existing_psc_subnet_self_link" {
+  description = "The existing PSC subnet self link"
   type        = string
 }
 
