@@ -22,7 +22,7 @@ variable "psc_subnet_name" {
 }
 
 variable "psc_subnet_cidr" {
-  description = "A non-overlapping /28 CIDR block for the PSC subnet"
+  description = "A non-overlapping CIDR block for the PSC subnet"
   type        = string
   default     = "10.100.16.0/28"
 }

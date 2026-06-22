@@ -26,13 +26,13 @@ variable "psc_subnet_name" {
 }
 
 variable "psc_subnet_cidr" {
-  description = "CIDR range for the PSC subnet. Required when creating a subnet. The Coralogix guide uses a dedicated /28."
+  description = "CIDR range for the PSC subnet. Required when creating a subnet."
   type        = string
   default     = null
 
   validation {
-    condition     = var.psc_subnet_cidr == null || can(cidrnetmask(var.psc_subnet_cidr)) && tonumber(split("/", var.psc_subnet_cidr)[1]) == 28
-    error_message = "psc_subnet_cidr must be null or a valid /28 CIDR block."
+    condition     = var.psc_subnet_cidr == null || can(cidrnetmask(var.psc_subnet_cidr))
+    error_message = "psc_subnet_cidr must be null or a valid CIDR block."
   }
 }
 

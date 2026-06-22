@@ -35,7 +35,7 @@ module "private-service-connect" {
 | gcp_region | GCP region for PSC resources | string | - | yes |
 | network_self_link | Existing VPC network self link such as `projects/<project>/global/networks/<name>` | string | - | yes |
 | psc_subnet_name | Name of the PSC subnet to create when `existing_psc_subnet_self_link` is null | string | `"cx-psc-subnet"` | no |
-| psc_subnet_cidr | CIDR block for the PSC subnet. Required when creating a subnet. Must be `/28`. | string | `null` | no |
+| psc_subnet_cidr | CIDR block for the PSC subnet. Required when creating a subnet. | string | `null` | no |
 | existing_psc_subnet_self_link | Existing PSC subnet self link to reuse instead of creating a new subnet | string | `null` | no |
 | ingress_service_attachment | Coralogix ingress PSC service attachment URI | string | `"projects/coralogix-prod-saas-service/regions/us-central1/serviceAttachments/us3-psc-ingress-v1"` | no |
 | api_service_attachment | Coralogix API PSC service attachment URI | string | `"projects/coralogix-prod-saas-service/regions/us-central1/serviceAttachments/us3-psc-api-v1"` | no |
