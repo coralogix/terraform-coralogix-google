@@ -108,7 +108,8 @@ resource "google_dns_managed_zone" "private" {
 }
 
 resource "google_dns_record_set" "ingress" {
-  count = local.manage_private_dns_records ? 1 : 0
+  count      = local.manage_private_dns_records ? 1 : 0
+  depends_on = [google_dns_managed_zone.private]
 
   project      = var.project_id
   managed_zone = local.private_dns_zone_name
@@ -119,7 +120,8 @@ resource "google_dns_record_set" "ingress" {
 }
 
 resource "google_dns_record_set" "api" {
-  count = local.manage_private_dns_records ? 1 : 0
+  count      = local.manage_private_dns_records ? 1 : 0
+  depends_on = [google_dns_managed_zone.private]
 
   project      = var.project_id
   managed_zone = local.private_dns_zone_name
