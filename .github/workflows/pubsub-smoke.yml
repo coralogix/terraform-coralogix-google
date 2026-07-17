@@ -1,0 +1,32 @@
+name: pubsub smoke
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/pubsub-smoke.yml"
+      - "examples/pubsub/**"
+      - "modules/pubsub/**"
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/pubsub-smoke.yml"
+      - "examples/pubsub/**"
+      - "modules/pubsub/**"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform init
+        run: terraform -chdir=examples/pubsub init -backend=false
+
+      - name: Terraform validate
+        run: terraform -chdir=examples/pubsub validate
